@@ -21,11 +21,11 @@ def processFile(fn):
     if not name in graph:
         graph[name] = []
     for line in content:
-        if "#include" in line and "\"" in line:
+        if "#include" in line and not "<" in line:
             includeName = line[line.find("\"")+1:line.rfind(".")]
             if predir + includeName+".h" in headers:
                 includeName = predir + includeName
-            if not name == includeName:
+            if not name == includeName and predir + includeName+".h" in headers:
                 graph[name].append(includeName)
 
 headers =  [x[2:] for x in headers]
